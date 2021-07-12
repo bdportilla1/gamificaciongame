@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/head :: head">
+<body>
+	<header th:replace="fragments/header :: header"></header>
+	<div class="container" id="sms">
+		<div class="alert alert-success alert-dismissible fade show mt-2"
+			role="alert" th:if="${success != null}">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span th:text="${success}"></span>
+		</div>
+		<div class="alert alert-danger alert-dismissible fade show mt-2"
+			role="alert" th:if="${error != null}">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span th:text="${error}"></span>
+		</div>
+		<div class="alert alert-success alert-dismissible fade show mt-2"
+			role="alert" th:if="${sms != null}">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span th:text="${sms}"></span>
+		</div>
+	</div>
+	<div class="row justify-content-center pt-4">
+		<div id="login-formContent" class="rounded-lg">
+			<div class="login_fadeIn login_first">
+				<i class="fas fa-user-circle"></i>
+			</div>
+
+			<form class="col-12" th:action="@{/login}" method="post">
+				<input type="text" id="username"
+					class="login_fadeIn login_second login_style" name="username"
+					placeholder="Usuario" autofocus required> <input
+					type="password" id="password"
+					class="login_fadeIn login_third login_style" name="password"
+					placeholder="Contraseña" required> <input type="submit"
+					class="login_fadeIn login_fourth btn btn-info btn-lg shadow mb-2"
+					value="Ingresar">
+			</form>
+		</div>
+	</div>
+	<div class="row justify-content-center pt-4 text-center">
+		<div>
+			<div>
+				<a>¿No se encuentra registrado?</a>
+			</div>
+			<a href="/crear_usuario">Regístrate</a>
+		</div>
+	</div>
+	<footer th:replace="fragments/footer :: footer"> </footer>
+</body>
+</html>

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+
+    <div class="page-wrapper chiller-theme toggled">
+
+        <!-- AQUI SE AGREGA EL NAV LATERAL  -->
+        <div th:replace="fragments/profesor_nav :: profesor_nav"></div>
+        <!-- AQUI SE AGREGA EL NAV LATERAL  -->
+
+
+        <!-- AQUI EMPIEZA EL CONTENIDO DE LA PAGINA  -->
+        <main class="page-content">
+            <header th:replace="fragments/header :: header"></header>
+            <div class="container-fluid">
+
+                <h2 class="text-center">Banco de Preguntas</h2>
+                <hr>
+                <div class="row border px-2 py-2 ml-2 mr-2">
+                	<div class="col-md-12 text-right">
+                		<a style="color: white" class="btn btn-info mr-2" data-toggle="modal" data-target="#modal_bancopreguntas">Editar</a>
+                	</div>
+                	<div class="col-md-6">
+                		<h5><strong>Código: </strong><span th:text="${bancopreguntas.getCodigo}"></span></h5>
+                	</div>
+                	<div class="col-md-6">
+                		<h5><strong>Tema: </strong><span th:text="${bancopreguntas.getTema}"></span></h5>
+                	</div>
+                	<div class="col-md-6">
+                		<h5><strong>Periodo: </strong><span th:text="${bancopreguntas.getPeriodo}"></span></h5>
+                	
+                	</div>
+                	<div class="col-md-6">
+                		<h5><strong>Grado: </strong><span th:text="${bancopreguntas.getGrado}"></span></h5>
+                	</div>
+                	<div class="col-md-6">
+                		<h5><strong>Paralelos: </strong><span th:text="${bancopreguntas.getParalelos}"></span></h5>
+                	</div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12 border">
+                        <ul th:if="${bancopreguntas.idbancopreguntas != null}" class="nav nav-pills nav-fill">
+                            <li class="nav-item"><a class="nav-link active" data-toggle="tab"
+                                    href="#opcionmultiple">Opción
+                                    múltiple</a></li>
+                              <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#vf">Verdadero
+                                    falso</a></li>
+                            <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#enlazado">Enlazado</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#relleno">Relleno</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+						<!-- AQUI 
+							***** FORMULARIO PARA preguntas de opcion multiple -->
+                              <div id="opcionmultiple" class="tab-pane fade">
+
+                                     <form method="post" th:action="@{/profesor/guardar_opcionmultiple}">
+                                <input type="hidden" name="bancopreguntas"
+                                                  th:value="${bancopreguntas.getIdbancopreguntas}">
+	                                 <input type="hidden" id="tipo" name="tipo" value="opcionmultiple">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                     <label>Enunciado</label>
+											    <textarea class="form-control" id="enunciado" name="enunciado" rows="1"></textarea>
+											
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                <label class="col">Seleccione el nivel de complejidad</label>
+                                                <div class="input-group ">
+											  <div class="input-group-prepend">
+											    <label class="input-group-text" for="inputGroupSelect01">Complejidad</label>
+											  </div>
+											  <select class="custom-select" id="nivelcomplejidad" name="nivelcomplejidad">
+											    <option selected value="Bajo">Bajo</option>
+											    <option value="Medio">Medio</option>
+											    <option value="Alto">Alto</option>
+											  </select>
+											</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+											    <label>Respuesta 1 (Escribir la respuesta correcta)</label>
+											    <textarea class="form-control" id="res1" name="res1" rows="1"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+											    <label>Respuesta 2</label>
+											    <textarea class="form-control" id="res2" name="res2" rows="1"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+											    <label>Respuesta 3</label>
+											    <textarea class="form-control" id="res3" name="res3" rows="1"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+											    <label>Respuesta 4</label>
+											    <textarea class="form-control" id="res4" name="res4" rows="1"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+											    <label>Retroalimentación</label>
+											    <textarea class="form-control" id="retroalimentacion" name="retroalimentacion" rows="1"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-success">Agregar pregunta</button>
+                                    </div>
+                                </form>
+                                    
+                                    
+                                  </div>
+                                
+                                
+                                <!-- AQUI 
+							***** FORMULARIO PARA preguntas de verdadero o falso -->
+                              <div id="vf" class="tab-pane fade">
+                                    <form method="post" th:action="@{/profesor/guardar_verdaderofalso}">
+                                <input type="hidden" id="bancopreguntas" name="bancopreguntas"
+                                                  th:value="${bancopreguntas.getIdbancopreguntas}">
+	                                 <input type="hidden" id="tipo" name="tipo" value="verdaderofalso">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                     <label>Enunciado</label>
+											    <textarea class="form-control" id="enunciado" name="enunciado" rows="1"></textarea>
+											
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                <label class="col">Seleccione el nivel de complejidad</label>
+                                                <div class="input-group ">
+											  <div class="input-group-prepend">
+											    <label class="input-group-text">Complejidad</label>
+											  </div>
+											  <select class="custom-select" id="nivelcomplejidad" name="nivelcomplejidad">
+											    <option selected value="Bajo">Bajo</option>
+											    <option value="Medio">Medio</option>
+											    <option value="Alto">Alto</option>
+											  </select>
+											</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+											    <label>Seleccionar la respuesta correcta: </label>
+											<hr>
+											    <div class="form-check">
+													  <input class="form-check-input" type="radio" name="respuesta" id="respuestav" value=1 checked>
+													  <label class="form-check-label" >
+													    Verdadero 
+													  </label>
+													</div> 
+													
+												<div class="form-check">
+												  <input class="form-check-input" type="radio" name="respuesta" id="respuestaf" value=0>
+												  <label class="form-check-label" >
+												     Falso
+												  </label>
+												</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 px-4">
+                                               <div class="row px-2">
+											    <label>Retroalimentación</label>
+											    <textarea class="form-control" id="retroalimentacion" name="retroalimentacion" rows="1"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                
+                                    
+                                    
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-success">Agregar pregunta</button>
+                                    </div>
+                                </form>
+                                
+                                
+                                
+                                
+                                        
+                                <!-- AQUI 
+							***** FORMULARIO PARA preguntas de ENLAZADO -->
+                                  </div>
+                            <div id="enlazado" class="tab-pane fade">
+                                  <form method="post" th:action="@{/profesor/guardar_enlazado}">
+                                <input type="hidden" id="bancopreguntas" name="bancopreguntas"
+                                                  th:value="${bancopreguntas.getIdbancopreguntas}">
+	                                 <input type="hidden" id="tipo" name="tipo" value="enlazado">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                <label class="col">Seleccione el nivel de complejidad</label>
+                                                <div class="input-group ">
+											  <div class="input-group-prepend">
+											    <label class="input-group-text" for="inputGroupSelect01">Complejidad</label>
+											  </div>
+											  <select class="custom-select" id="nivelcomplejidad" name="nivelcomplejidad">
+											    <option selected value="Bajo">Bajo</option>
+											    <option value="Medio">Medio</option>
+											    <option value="Alto">Alto</option>
+											  </select>
+											</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12 px-2">
+                                            <div class="row px-2 py-2" >
+                                            	<div class="col-md-12 ">
+										 		 <label>Pregunta de enlace 1</label>
+										 		   </div>
+										 		<div class="col-md-6">
+											   	 	<input type="text" class="form-control" id="p1" placeholder="Escribir la pregunta"></input>
+											    </div>
+											    <div class="col-md-6">
+											    	<input type="text" class="form-control" id="r1" placeholder="Escribir la respuesta"></input>
+                                           		</div>
+                                            </div>
+                                             <div class="row px-2 py-2" >
+                                            	<div class="col-md-12 ">
+										 		 <label>Pregunta de enlace 2</label>
+										 		   </div>
+										 		<div class="col-md-6">
+											   	 	<input type="text" class="form-control" id="p2" placeholder="Escribir la pregunta"></input>
+											    </div>
+											    <div class="col-md-6">
+											    	<input type="text" class="form-control" id="r2" placeholder="Escribir la respuesta"></input>
+                                           		</div>
+                                            </div>
+                                             <div class="row px-2 py-2 " >
+                                            	<div class="col-md-12 ">
+										 		 <label>Pregunta de enlace 3</label>
+										 		   </div>
+										 		<div class="col-md-6">
+											   	 	<input type="text" class="form-control" id="p3" placeholder="Escribir la pregunta"></input>
+											    </div>
+											    <div class="col-md-6">
+											    	<input type="text" class="form-control" id="r3" placeholder="Escribir la respuesta"></input>
+                                           		</div>
+                                            </div>
+                                             <div class="row px-2 py-2 " >
+                                            	<div class="col-md-12 ">
+										 		 <label>Pregunta de enlace 4</label>
+										 		   </div>
+										 		<div class="col-md-6">
+											   	 	<input type="text" class="form-control" id="p4" placeholder="Escribir la pregunta"></input>
+											    </div>
+											    <div class="col-md-6">
+											    	<input type="text" class="form-control" id="r4" placeholder="Escribir la respuesta"></input>
+                                           		</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <input type="hidden" class="form-control" id="palabrasa" name="palabrasa"></input>
+                                        <input type="hidden" class="form-control" id="palabrasb" name="palabrasb"></input>
+                                       
+                                    </div>
+                                  
+                              
+                                    
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-success" onclick="rellenar()">Agregar pregunta</button>
+                                    </div>
+                                </form>
+                                  </div>
+                                
+                                
+                                
+                                  <!-- AQUI 
+							***** FORMULARIO PARA preguntas de RELLENO -->
+                            <div id="relleno" class="tab-pane fade">
+                                   <form method="post" th:action="@{/profesor/guardar_relleno}">
+                                <input type="hidden" id="bancopreguntas" name="bancopreguntas"
+                                                  th:value="${bancopreguntas.getIdbancopreguntas}">
+	                                 <input type="hidden" id="tipo" name="tipo" value="relleno">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12 px-4">
+                                            <div class="row px-2">
+                                                     <label>Frase</label>
+											    <textarea class="form-control" id="frase" name="frase" rows="1" placeholder="Escribir la frase"></textarea>
+											
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12 px-4 text-right">
+                                        	<a class="btn btn-info" style="color: white" onclick="procesar()">Procesar</a>
+                                        	<a class="btn btn-warning" style="color: white" onclick="limpiar()">Limpiar</a>
+                                        </div>
+                                    </div>
+                                     <div class="form-row">
+                                        <div class="form-group col-md-12 px-2">
+                                            <div class="row px-2">
+                                            <div class="col col-md-12" id="listapalabras">
+                                           
+												</div>
+												
+												
+	                                           
+											 </div>
+											
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="form-row">
+                                     
+                                     	<div class="form-group col-md-3 px-4">
+                                     		  <label>Agregar palabras trampa</label>
+                                     		<input type="text" class="form-control" id="trampa" placeholder="Escribir palabra trampa"></input>
+                                     		
+                                     			<ul class="list-group  mt-2" id="listatrampa">
+                                     				
+                                   				</ul>
+                                     		
+                                     	 </div>
+                                     	 <div class="form-group col-md-3 px-4">
+                                     		 <a class="btn btn-success" style="color: white" onclick="agregartrampa()">Agregar</a>
+                                     	 </div>
+                                     	 
+                                     	 
+                                     	 
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                <label class="col">Seleccione el nivel de complejidad</label>
+                                                <div class="input-group ">
+											  <div class="input-group-prepend">
+											    <label class="input-group-text">Complejidad</label>
+											  </div>
+											  <select class="custom-select" id="nivelcomplejidad" name="nivelcomplejidad">
+											    <option selected value="Bajo">Bajo</option>
+											    <option value="Medio">Medio</option>
+											    <option value="Alto">Alto</option>
+											  </select>
+											</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="palabrastrampa" name="palabrastrampa"></input>
+                                    <input type="hidden" id="palabras" name="palabras"></input>
+                                    <input type="hidden" id="posiciones" name=posiciones></input>
+							
+                                
+                                    
+                                    
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-success" onclick="generarcampos()" >Agregar pregunta</button>
+                                    </div>
+                                </form>
+                                  </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                 <hr>
+                <div class="row border">
+                <h5 class="text-center">Listado de preguntas</h5>
+	                <div class="table-responsive">
+	                	
+						<table class="table my-3">
+						
+							<tbody id="tabla_preguntas">
+							
+								  	<!-- LISTADO DE LAS PREGUNTAS DE OPCION MULTIPLE -->
+								  	
+									<tr th:if="${bancopreguntas.opcionmultiple.size() >0}">
+										<td class="text-center" colspan="4"><strong>Preguntas de Opción Múltiple</strong></td>
+										<td>
+											<a style="color: white" class="btn btn-primary" data-toggle="collapse" href=".tabla_info_opcionmultiple" aria-controls="tabla_info_opcionmultiple"><i class="fas fa-eye"> Mostrar / Ocultar</i></a>
+										</td>
+									</tr>
+									
+									<tr th:if="${bancopreguntas.opcionmultiple.size() >0}"  class="collapse tabla_info_opcionmultiple" >
+										<th scope="col">#</th>
+										<th scope="col">Tipo</th>
+										<th scope="col">Enunciado (Frase)</th>
+										<th scope="col">Complejidad</th>
+										<th scope="col">Acciones</th>
+									</tr>
+									<tr th:each="preguntas_opcion_multiple: ${bancopreguntas.opcionmultiple}" class="collapse tabla_info_opcionmultiple">
+										<td th:text="${preguntas_opcion_multipleStat.index}+1"></td>
+									    <td th:text="${preguntas_opcion_multiple.tipo}" />
+									    <td th:text="${preguntas_opcion_multiple.enunciado}" />
+									    <td th:text="${preguntas_opcion_multiple.nivelcomplejidad}" />
+									    <td>
+										 	<form method="post" th:action="@{/profesor/eliminar_opcionmultiple}">
+										 		 <input type="hidden" name="idopcionmultiple" th:value="${preguntas_opcion_multiple.idopcionmultiple}">
+												<a style="color: white" class="btn btn-info"><i class="fas fa-pen"></i></a>
+												<button type="submit" class="btn btn-danger"  ><i class="fas fa-minus-circle"></i></button>
+											</form>
+										</td> 
+									</tr>
+									
+									<!-- LISTADO DE LAS Verdadero Falso -->
+									<tr th:if="${bancopreguntas.verdaderofalso.size() >0}">
+										<td class="text-center" colspan="4"><strong>Preguntas de Verdadero o Falso</strong></td>
+										<td>
+											<a style="color: white" class="btn btn-primary" data-toggle="collapse" href=".tabla_info_verdaderofalso" aria-controls="tabla_info_verdaderofalso"><i class="fas fa-eye"> Mostrar / Ocultar</i></a>
+										</td>
+									</tr>
+									
+									<tr th:if="${bancopreguntas.verdaderofalso.size() >0}" class="collapse tabla_info_verdaderofalso">
+										<th scope="col">#</th>
+										<th scope="col">Tipo</th>
+										<th scope="col">Enunciado (Frase)</th>
+										<th scope="col">Complejidad</th>
+										<th scope="col">Acciones</th>
+									</tr>
+									<tr th:each="preguntas_verdaderofalso: ${bancopreguntas.verdaderofalso}" class="collapse tabla_info_verdaderofalso">
+										<td th:text="${preguntas_verdaderofalsoStat.index}+1"></td>
+									    <td th:text="${preguntas_verdaderofalso.tipo}" />
+									    <td th:text="${preguntas_verdaderofalso.enunciado}" />
+									    <td th:text="${preguntas_verdaderofalso.nivelcomplejidad}" />
+									    <td>
+										 	<form method="post" th:action="@{/profesor/eliminar_opcionmultiple}">
+										 		 <input type="hidden" name="idverdaderofalso" th:value="${preguntas_verdaderofalso.idopcionvf}">
+												<a style="color: white" class="btn btn-info"><i class="fas fa-pen"></i></a>
+												<button type="submit" class="btn btn-danger"  ><i class="fas fa-minus-circle"></i></button>
+											</form>
+										</td> 
+									</tr>
+									
+									
+							</tbody>
+	
+						</table>
+					</div>
+                
+                
+                </div>
+                
+                
+                <!-- MODAL BANCO PREGUNTAS -->
+               <div class="modal fade" id="modal_bancopreguntas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Editar información del Banco de Preguntas</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      
+				      <form method="post" th:action="@{/profesor/guardar_bancoPreguntas}"
+	                                    th:object="${bancopreguntas}">
+				      
+				      <div class="modal-body">
+	                                    <input type="hidden"  name="usuario" th:value="${#session.getAttribute('usuario').getIdusuario}">
+	                                    <input type="hidden" name="idbancopreguntas" th:field="*{idbancopreguntas}">
+	                                     <input type="hidden"  name="codigo" th:field="*{codigo}">
+	
+	                                    <div class="form-row">
+	                                        <div class="form-group col-md-6 px-4">
+	                                            <div class="row px-2">
+	                                                <label class="col-md-12">Tema</label>
+	                                                <input type="text" class="form-control col-md-12" id="tema" name="tema"
+	                                                    th:field="*{tema}" placeholder="Ingrese el tema" required>
+	                                            </div>
+	                                        </div>
+	                                        <div class="form-group col-md-6 px-4">
+	                                            <div class="row px-2">
+	                                                <label class="col">Grado</label>
+	                                                <input type="text" class="form-control col-md-12" id="grado"
+	                                                    name="grado" th:field="*{grado}" placeholder="Ingrese el grado" required>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-row">
+	                                        <div class="form-group col-md-6 px-4">
+	                                            <div class="row px-2">
+	                                                <label class="col-md-12">Período</label>
+	                                                <input type="text" class="form-control col-md-12" id="periodo"
+	                                                    name="periodo" th:field="*{periodo}"
+	                                                    placeholder="Ingrese el periodo" required>
+	                                            </div>
+	                                        </div>
+	                                        <div class="form-group col-md-6 px-4">
+	                                            <div class="row px-2">
+	                                                <label class="col">Asignatura</label>
+	                                                <input type="text" class="form-control col-md-12" id="asignatura"
+	                                                    name="asignatura" th:field="*{asignatura}"
+	                                                    placeholder="Ingrese la asignatura" required>
+	                                            </div>
+	                                            
+	                                        </div>
+	                                    </div>
+	                                     <div class="form-row">
+	                                        <div class="form-group col-md-6 px-4">
+	                                            <div class="row px-2">
+	                                                <label class="col-md-12" for="inputPassword4">Paralelos</label>
+	                                                <input type="text" class="form-control col-md-8" id="par"
+	                                                    placeholder="Ingrese los paralelos" >
+			                                     			
+	                                   				 <div class="col-md-4 text-center">
+			                                     		 <a class="btn btn-success" style="color: white" onclick="agregarparalelo()">Agregar</a>
+			                                     	 </div>
+					                                     	 <ul class="list-group  mt-2" id="listaparalelos">
+			                                     				
+			                                   				</ul>
+	                                            </div>
+	                                            <input type="text" class="form-control col-md-8" id="paralelos"
+	                                                    name="paralelos" th:field="*{paralelos}"
+	                                                    placeholder="Ingrese los paralelos">
+	                                                  
+	                                        </div>
+	                                    </div>   
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				        <button type="submit" class="btn btn-primary" onclick="generarcamposparalelos()">Actualizar</button>
+				      </div>
+				        </form>
+				    </div>
+				  </div>
+				</div>
+				
+				
+				<!-- MODAL BANCO PREGUNTAS -->
+               <div class="modal fade" id="modal_opcionmultiple" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Editar Pregunta - Opción Múltiple</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <form method="post" th:action="@{/profesor/guardar_verdaderofalso}">
+                                <input type="hidden" id="bancopreguntas" name="bancopreguntas"
+                                                  th:value="${bancopreguntas.getIdbancopreguntas}">
+	                                 <input type="hidden" id="tipo" name="tipo" value="verdaderofalso">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                     <label>Enunciado</label>
+											    <textarea class="form-control" id="enunciado" name="enunciado" rows="1"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                <label class="col">Seleccione el nivel de complejidad</label>
+                                                <div class="input-group ">
+											  <div class="input-group-prepend">
+											    <label class="input-group-text">Complejidad</label>
+											  </div>
+											  <select class="custom-select" id="nivelcomplejidad" name="nivelcomplejidad">
+											    <option selected value="Bajo">Bajo</option>
+											    <option value="Medio">Medio</option>
+											    <option value="Alto">Alto</option>
+											  </select>
+											</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+											    <label>Seleccionar la respuesta correcta: </label>
+											<hr>
+											    <div class="form-check">
+													  <input class="form-check-input" type="radio" name="respuesta" id="respuestav" value=1 checked>
+													  <label class="form-check-label" >
+													    Verdadero 
+													  </label>
+													</div> 
+													
+												<div class="form-check">
+												  <input class="form-check-input" type="radio" name="respuesta" id="respuestaf" value=0>
+												  <label class="form-check-label" >
+												     Falso
+												  </label>
+												</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 px-4">
+                                               <div class="row px-2">
+											    <label>Retroalimentación</label>
+											    <textarea class="form-control" id="retroalimentacion" name="retroalimentacion" rows="1"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                
+                                    
+                                    
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-success">Agregar pregunta</button>
+                                    </div>
+                               
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				        <button type="submit" class="btn btn-primary">Actualizar</button>
+				      </div>
+				        </form>
+				    </div>
+				  </div>
+				</div>
+                
+                
+
+            </div>
+            <footer th:replace="fragments/footer :: footer"> </footer>
+        </main>
+
+    </div>
+
+<script th:inline="javascript">
+	
+	
+	var total= 0;
+	var total_selec =0;
+    var arreglo_split;
+    var actual_palabras = 0;
+    var idbanco = [[${ bancopreguntas.idbancopreguntas }]];
+    
+    // Capturando los paralelos
+    var paralelos = [[${ bancopreguntas.paralelos }]];
+ 
+    var par_split = paralelos.split(";");
+    //alert(idbanco);
+ 
+    var panel_opcionmultiple = document.getElementById("opcionmultiple");
+    var panel_vf = document.getElementById("vf");
+    var panel_enlazado = document.getElementById("enlazado");
+    var panel_relleno = document.getElementById("relleno");
+
+    if (idbanco == null) {
+    } else {
+        panel_opcionmultiple.classList.remove('fade');
+        panel_opcionmultiple.classList.add('in', 'active');
+        
+
+    }
+
+    function rellenar() {
+        var palabrasa = document.getElementById("palabrasa");;
+        var palabrasb = document.getElementById("palabrasb");;
+        var p1 = document.getElementById("p1");
+        var p2 = document.getElementById("p2");
+        var p3 = document.getElementById("p3");
+        var p4 = document.getElementById("p4");
+        var r1 = document.getElementById("r1");
+        var r2 = document.getElementById("r2");
+        var r3 = document.getElementById("r3");
+        var r4 = document.getElementById("r4");
+
+        palabrasa.value = p1.value + ";" + p2.value + ";" + p3.value + ";" + p4.value;
+        palabrasb.value = r1.value + ";" + r2.value + ";" + r3.value + ";" + r4.value;
+    }
+
+    function procesar() {
+        var num = 0;
+        var listapalabras = document.getElementById("listapalabras");
+        listapalabras.innerHTML = '';
+        var frase = document.getElementById("frase");
+        var split = frase.value.split(" ");
+        var seleccion = '<label>Seleccionar las palabras a rellenar</label><ul class="list-group list-group-horizontal nav nav-pills nav-fill" id="listapalabrassplit">';
+        for (let i = 0; i < split.length; i++) {
+            seleccion = seleccion + '<li class="list-group-item" id="split' + num + '" onclick="seleccionar(\'split' + num + '\')">' + split[i] + '</li>';
+            num = num + 1;
+            
+        }
+        seleccion = seleccion + "</ul>";
+        listapalabras.innerHTML += seleccion;
+        total = total -total_selec;
+        total_selec =0;
+    }
+    function seleccionar(split) {
+        var seleccion = document.getElementById(split);
+
+        if (seleccion.style.backgroundColor == "rgb(0, 255, 0)") {
+            seleccion.style.backgroundColor = "";
+            total=total-1;
+            total_selec=total_selec-1;
+        } else {
+        	if(total>=4){
+        		alert("Solo puede agregar un maximo de 4 palabras entre las palabras de la frase y palabras trampa");
+        		
+        	}else{
+        		seleccion.style.backgroundColor = "rgb(0, 255, 0)";
+                total=total+1;
+                total_selec = total_selec+1;
+        		
+        	}
+            
+        }
+    }
+
+    function limpiar() {
+        var listapalabras = document.getElementById("listapalabras");
+        listapalabras.innerHTML = '';
+        var frase = document.getElementById("frase");
+        frase.value = "";
+        
+        total = total-total_selec;
+        total_selec =0;
+    }
+    function agregartrampa() {
+    	if(document.getElementById("trampa").value!=""){
+    		if(total>=4){
+        		alert("Solo puede agregar un maximo de 4 palabras entre las palabras de la frase y palabras trampa");
+        		
+        	}else{
+        		var cont = $("#listatrampa").children().length;
+                var nuevapalabra = "<li class='list-group-item text-center' id='ptrampa" + actual_palabras + "'>" + document.getElementById("trampa").value + "<a class='btn btn-danger ml-2 mr-2' style='color: white' onclick='quitartrampa(" + "\"ptrampa" + actual_palabras + "\"" + ")'><i class='fas fa-times-circle'></i></a></li>";
+                actual_palabras = actual_palabras + 1;
+                var listapalabras = document.getElementById("listatrampa");
+                listapalabras.innerHTML += nuevapalabra;
+                document.getElementById("trampa").value = "";
+                total= total+1;
+        	}
+    		
+    		
+    	}else{
+    		alert("Para agregar una palabra el campo debe contener al menos un caracter");
+    	}
+        
+
+    }
+
+    function quitartrampa(codigo) {
+        var listapalabras = document.getElementById("listatrampa");
+        document.getElementById(codigo).remove();
+        total= total-1;
+    }
+
+
+    // GENERAR LOS INPUTS A GUARDAR
+    function generarcampos() {
+        var palabrast = "";
+        var palabras = "";
+        var posiciones = "";
+        var cont = $("#listapalabrassplit").children().length;
+        var inputpalabrastrampa = document.getElementById("palabrastrampa");
+        var inputpalabras = document.getElementById("palabras");
+        var inputposiciones = document.getElementById("posiciones");
+
+        for (let i = 0; i < actual_palabras; i++) {
+            if (document.getElementById("ptrampa" + i) != null) {
+                if (palabrast == "") {
+                    palabrast = palabrast + document.getElementById("ptrampa" + i).innerText;
+                } else {
+                    palabrast = palabrast + ";" + document.getElementById("ptrampa" + i).innerText;
+                }
+            }
+        }
+        for (let j = 0; j < cont; j++) {
+            if (document.getElementById("split" + j).style.backgroundColor == "rgb(0, 255, 0)") {
+                if (palabras == "") {
+                    palabras = palabras + document.getElementById("split" + j).innerText;
+                    posiciones = posiciones + j;
+                } else {
+                    palabras = palabras + ";" + document.getElementById("split" + j).innerText;
+                    posiciones = posiciones + ";" + j;
+                }
+            }
+        }
+        inputpalabrastrampa.value = palabrast;
+        inputpalabras.value = palabras;
+        inputposiciones.value = posiciones;
+    }
+    
+    
+    var actual_palabras_p=0;
+    function agregarparalelo(){
+    	if(document.getElementById("par").value!=""){
+    		var cont = $("#listaparalelos").children().length;
+            var nuevapalabra = "<li class='list-group-item text-center' id='paralelo" + actual_palabras_p + "'>" + document.getElementById("par").value + "<a class='btn btn-danger ml-2 mr-2' style='color: white' onclick='quitarparalelo(" + "\"paralelo" + actual_palabras_p + "\"" + ")'><i class='fas fa-times-circle'></i></a></li>";
+            actual_palabras_p = actual_palabras_p + 1;
+            var listapalabras = document.getElementById("listaparalelos");
+            listapalabras.innerHTML += nuevapalabra;
+            document.getElementById("par").value = "";
+    	}else{
+    		alert("Ingresa alguna huebada");
+    	}
+    	 
+    }
+    
+    var nuevapalabra_e="";
+    var listapalabras_e = document.getElementById("listaparalelos");
+    for (let i = 0; i < par_split.length; i++) {
+    	nuevapalabra_e ="<li class='list-group-item text-center' id='paralelo" + actual_palabras_p + "'>" + par_split[i] + "<a class='btn btn-danger ml-2 mr-2' style='color: white' onclick='quitarparalelo(" + "\"paralelo" + actual_palabras_p + "\"" + ")'><i class='fas fa-times-circle'></i></a></li>";
+        actual_palabras_p = actual_palabras_p + 1;
+        listapalabras_e.innerHTML += nuevapalabra_e;
+        document.getElementById("par").value = "";
+  	         
+   	}
+    
+    
+    function quitarparalelo(codigo) {
+        var listapalabras = document.getElementById("listaparalelos");
+        document.getElementById(codigo).remove();
+    }
+    function generarcamposparalelos() {
+    	var paralelos = "";
+    	var inputparalelos = document.getElementById("paralelos");
+	   	 for (let i = 0; i < actual_palabras_p; i++) {
+	            if (document.getElementById("paralelo" + i) != null) {
+	                if (paralelos == "") {
+	                	paralelos = paralelos + document.getElementById("paralelo" + i).innerText;
+	                } else {
+	                	paralelos = paralelos + ";" + document.getElementById("paralelo" + i).innerText;
+	                }
+	            }
+	        }
+	   	inputparalelos.value = paralelos;
+    }
+    
+    function ver_tabla_info_opcionmultiple(){
+    	
+    	
+    }
+ 
+
+</script>
+</body>
+
+</html>

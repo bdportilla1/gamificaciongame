@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+	<div class="page-wrapper chiller-theme toggled">
+
+		<!-- AQUI SE AGREGA EL NAV LATERAL  -->
+		<div th:replace="fragments/profesor_nav :: profesor_nav"></div>
+		<!-- AQUI SE AGREGA EL NAV LATERAL  -->
+
+
+		<!-- AQUI EMPIEZA EL CONTENIDO DE LA PAGINA  -->
+		<main class="page-content">
+			<header th:replace="fragments/header :: header"></header>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="form-group col-md-12">
+					<h3 class="text-center">Observar estadísticas</h3>
+							<hr class="bg-info">
+						<div class="row justify-content-center align-items-center">
+							
+							<!-- Promedio por paralelos -->
+							<div class="col col-md-6">
+								<script type="text/javascript">
+							 var paralelos = "[[${paralelos}]]";
+							 var puntaje = "[[${puntaje}]]";
+							</script>
+								<input type="hidden" id="paralelo" th:value="${paralelos}">
+								<input type="hidden" id="puntaje" th:value="${puntaje}">
+								<canvas id="promedioParalelos" width="300" height="300"></canvas>
+							</div>
+							
+							<!-- Número de estudiantes por nota/10 -->
+							<div class="col col-md-6">
+								<script type="text/javascript">
+							 var numEstudiantes = "[[${numEstudiantes}]]";
+							 var promedio = "[[${promedio}]]";
+							</script>
+								<input  type="hidden" id="numEstudiantes" th:value="${numEstudiantes}">
+								<input  type="hidden" id="promedio" th:value="${promedio}">
+								<canvas id="promedioEstudiantes" ></canvas>
+							</div>
+						</div>
+						<!-- <form id="form">
+							<input type="text" name="idbancopreguntas" id="idbancopreguntas"
+								th:value="${idbancopreguntas}">
+							<button id="enviarId" type="submit">Enviar</button>
+						</form> -->
+					</div>
+				</div>
+			</div>
+			<footer th:replace="fragments/footer :: footer"> </footer>
+		</main>
+	</div>
+	<script type="text/javascript">
+	//Script que no funciona :(
+//var id=document.getElementById("idbancopreguntas").value;
+window.onbeforeunload = function(e) {
+	// Build formData object.
+	let formData = new FormData();
+	formData.append('idbancopreguntas', id);
+
+	fetch("profesor/observar_estadisticas",
+	    {
+		
+	        body: formData,
+	        method: "post"
+	    });
+	  
+	  
+    return "Don't you want to save before leaving this page?";
+};
+
+</script>
+	<script type="text/javascript"
+		src="../../js/estadisticas/estadisticas.js"></script>
+</body>
+</html>
