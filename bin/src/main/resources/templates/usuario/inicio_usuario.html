@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+
+	<div class="page-wrapper chiller-theme toggled">
+
+		<!-- AQUI SE AGREGA EL NAV LATERAL  -->
+		<div th:if="${usuario.getRol=='PROFESOR'}">
+			<div th:replace="fragments/profesor_nav :: profesor_nav"></div>
+		</div>
+		<div th:if="${usuario.getRol=='ADMINISTRADOR'}">
+			<div th:replace="fragments/administrador_nav :: administrador_nav"></div>
+		</div>
+		<!-- AQUI SE AGREGA EL NAV LATERAL  -->
+
+
+		<!-- AQUI EMPIEZA EL CONTENIDO DE LA PAGINA  -->
+		<main class="page-content">
+			<header th:replace="fragments/header :: header"></header>
+			<div class="container" id="sms">
+				<div class="alert alert-success alert-dismissible fade show mt-2"
+					role="alert" th:if="${sms != null}">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<span th:text="${sms}"></span>
+				</div>
+			</div>
+			<div class="container-fluid">
+
+
+				<div th:replace="principal/principal :: principal"></div>
+			</div>
+			<footer th:replace="fragments/footer :: footer"> </footer>
+		</main>
+
+	</div>
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/head :: head">
+<body>
+
+	<div class="page-wrapper chiller-theme toggled">
+
+		<!-- AQUI SE AGREGA EL NAV LATERAL  -->
+		<div th:if="${usuario.getRol=='PROFESOR'}">
+			<div th:replace="fragments/profesor_nav :: profesor_nav"></div>
+		</div>
+		<div th:if="${usuario.getRol=='ADMINISTRADOR'}">
+			<div th:replace="fragments/administrador_nav :: administrador_nav"></div>
+		</div>
+
+		<!-- AQUI SE AGREGA EL NAV LATERAL  -->
+		<main class="page-content">
+			<header th:replace="fragments/header :: header"></header>
+			<div class="container">
+				<div class="row rounded shadow-sm justify-content-center">
+					<div class="col-sm-8 align-self-center">
+						<div>
+							<h3 class="text-center">Editar usuario</h3>
+							<hr class="bg-info">
+						</div>
+						<!-- Formulario con campos bloqueados -->
+						<form th:object="${usuario}" method="post">
+							<div class="row align-self-center" id="inputro"
+								style="margin-bottom: 2%">
+								<div class="col-sm-6" style="margin: auto">
+									<div class="form-group">
+										<label>Cédula </label> <input id="cedula" name="cedula"
+											class="form-control" th:field="*{cedula}">
+									</div>
+									<div class="form-group">
+										<label>Apellidos </label>
+										<input name="apellidos" class="form-control"
+											placeholder="Torres..." th:field="*{apellidos}">
+									</div>
+									<div class="form-group">
+										<label>Contraseña </label>
+										<input name="contrasenia" style="text-transform: lowercase;"
+											class="form-control" placeholder="********">
+									</div>
+									<div class="form-group">
+										<label>Correo </label>
+										<input name="correo" style="text-transform: lowercase;"
+											class="form-control" placeholder="usuario@..."
+											th:field="*{correo}">
+									</div>
+								</div>
+								<div class="col-sm-6" style="margin: auto">
+									<div class="form-group">
+										<label>Nombres </label>
+										<input name="nombres" class="form-control"
+											placeholder="Carlos..." th:field="*{nombres}">
+									</div>
+									<div class="form-group">
+										<label>Usuario </label> <input name="usuario"
+											readonly="readonly" type="text" class="form-control"
+											th:field="*{usuario}">
+									</div>
+									<div class="form-group">
+										<label>Teléfono </label>
+										<input name="telefono" type="text"
+											style="text-transform: lowercase;" class="form-control"
+											placeholder="0979..." th:field="*{telefono}">
+									</div>
+									<div class="form-group">
+										<label>Institución</label>
+										<input name="institucion" type="hidden" class="form-control"
+											placeholder="Escuela..."
+											th:value="${usuario.institucion.idinstitucion}"> <input
+											readonly="readonly" type="text" class="form-control"
+											placeholder="Escuela..."
+											th:value="${usuario.institucion.nombre}">
+									</div>
+								</div>
+							</div>
+						</form>
+						<div class="row align-self-center">
+
+							<div class="col-sm-6 align-self-center mb-2" style="margin: auto">
+								<!-- REVISAR ONCLICK, NO SE PASA CORRECTAMENTE LA CONTRASEÑA INICIAL -->
+								<button class="btn btn-info col-sm-12" data-toggle="modal"
+									data-target="#myModal">
+									<i class="fa fa-user-edit"></i> Actualizar
+								</button>
+							</div>
+
+							<div class="col-sm-6 align-self-center mb-2" style="margin: auto"
+								th:if="${usuario.getRol!='ADMINISTRADOR'}">
+								<!-- REVISAR ONCLICK, NO SE PASA CORRECTAMENTE LA CONTRASEÑA INICIAL -->
+								<button class="btn btn-danger col-sm-12" data-toggle="modal"
+									data-target="#myModalDelete">
+									<i class="fa fa-user-minus"></i> Eliminar
+								</button>
+							</div>
+
+						</div>
+						<!-- Modal de modificación de usuario -->
+						<div class="modal fade" id="myModal" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+									</div>
+									<div class="modal-body">
+										<div>
+											<h3 class="text-center">Editar usuario</h3>
+											<hr class="bg-info">
+										</div>
+										<form class="form-horizontal" action="#"
+											th:action="@{guardar_usuario_editado}" th:object="${usuario}"
+											method="post">
+											<div class="row align-self-center" style="margin-bottom: 2%">
+												<div class="col-sm-6" style="margin: auto">
+													<div class="form-group">
+														<label>Cédula </label> <input id="cedula" name="cedula"
+															readonly="readonly" class="form-control"
+															th:field="*{cedula}">
+													</div>
+													<div class="form-group">
+														<label>Apellidos <small class="text-secondary">(requerido)</small></label>
+														<input name="apellidos" required type="text"
+															class="form-control" placeholder="Torres..."
+															th:field="*{apellidos}">
+													</div>
+													<div class="form-group">
+														<label>Contraseña <small class="text-secondary">(requerido)</small></label>
+														<input name="contrasenia" id="pass" type="password"
+															style="text-transform: lowercase;" class="form-control"
+															placeholder="********">
+													</div>
+													<div class="form-group">
+														<label>Correo <small class="text-secondary">(requerido)</small></label>
+														<input name="correo" required type="email"
+															style="text-transform: lowercase;" class="form-control"
+															placeholder="usuario@..." th:field="*{correo}">
+													</div>
+												</div>
+												<div class="col-sm-6" style="margin: auto">
+													<div class="form-group">
+														<label>Nombres <small class="text-secondary">(requerido)</small></label>
+														<input name="nombres" required type="text"
+															class="form-control" placeholder="Carlos..."
+															th:field="*{nombres}">
+													</div>
+													<div class="form-group">
+														<label>Usuario </label> <input name="usuario"
+															readonly="readonly" type="text" class="form-control"
+															th:field="*{usuario}">
+													</div>
+													<div class="form-group">
+														<label>Teléfono <small class="text-secondary">(requerido)</small></label>
+														<input name="telefono" required type="text"
+															style="text-transform: lowercase;" class="form-control"
+															placeholder="0979..." th:field="*{telefono}">
+													</div>
+													<div class="form-group">
+														<label>Institución </label>
+														<div>
+															<select disabled class="form-control"
+																th:field="*{institucion}">
+																<option value="0">Seleccione una institución</option>
+																<option th:each="item : ${instituciones}"
+																	th:value="${item.idinstitucion}"
+																	th:text="${item.nombre}"></option>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-4 align-self-center" style="margin: auto">
+													<!-- REVISAR ONCLICK, NO SE PASA CORRECTAMENTE LA CONTRASEÑA INICIAL -->
+													<button class="btn btn-info col-sm-12" type="submit"
+														th:onclick="'inputValue()'">
+														<i class="fa fa-check"></i> Guardar
+													</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Modal eliminar usuario -->
+						<div class="modal fade" id="myModalDelete" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+									</div>
+									<div class="modal-body">
+										<div>
+											<h5 class="text-center"
+												th:utext="'¿Esta seguro de eliminar a &lt;strong&gt;' + ${usuario.getNombres}+'?'"></h5>
+											<hr class="bg-info">
+										</div>
+
+										<div class="row align-self-center" style="margin-bottom: 2%">
+											<div class="col-lg-6 align-self-center" style="margin: auto">
+												<button class="btn btn-success col-sm-12"
+													data-dismiss="modal">
+													<i class="fa fa-times"></i> No
+												</button>
+											</div>
+
+											<div class="col-lg-6 align-self-center" style="margin: auto">
+												<form class="form-horizontal" action="#"
+													th:action="@{eliminar_usuario}" th:object="${usuario}"
+													method="post">
+													<button class="btn btn-danger col-sm-12" type="submit">
+														<i class="fa fa-check"></i> Sí
+													</button>
+												</form>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer th:replace="fragments/footer :: footer"> </footer>
+		</main>
+	</div>
+	<script type="text/javascript">
+		$("#inputro :input").attr("readonly", true);
+	</script>
+</body>
+</html>

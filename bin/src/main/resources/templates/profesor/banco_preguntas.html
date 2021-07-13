@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+
+    <div class="page-wrapper chiller-theme toggled">
+
+        <!-- AQUI SE AGREGA EL NAV LATERAL  -->
+        <div th:replace="fragments/profesor_nav :: profesor_nav"></div>
+        <!-- AQUI SE AGREGA EL NAV LATERAL  -->
+
+
+        <!-- AQUI EMPIEZA EL CONTENIDO DE LA PAGINA  -->
+        <main class="page-content">
+            <header th:replace="fragments/header :: header"></header>
+            <div class="container-fluid">
+
+                <h2 class="text-center">Crear nuevo Banco de Preguntas</h2>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12 border px-2 py-2">
+                        <ul th:if="${bancopreguntas.idbancopreguntas == null}" class="nav nav-pills nav-fill">
+                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#banco">Banco de
+                                    Preguntas</a></li>
+                        </ul>
+                        <div class="tab-content">
+
+
+                            <!-- AQUI 
+							***** FORMULARIO PARA BANCO DE PREGUNTAS  -->
+                            <div id="banco" class="tab-pane in active px-3 py-3">
+
+                                <form method="post" th:action="@{/profesor/guardar_bancoPreguntas}"
+                                    th:object="${bancopreguntas}">
+
+                                    <input type="hidden" id="usuario" name="usuario" th:value="${#session.getAttribute('usuario').getIdusuario}">
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                <label class="col-md-12">Tema</label>
+                                                <input type="text" class="form-control col-md-12" id="tema" name="tema"
+                                                    th:field="*{tema}" placeholder="Ingrese el tema" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                <label class="col">Grado</label>
+                                                <input type="text" class="form-control col-md-12" id="grado"
+                                                    name="grado" th:field="*{grado}" placeholder="Ingrese el grado" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                <label class="col-md-12">Período</label>
+                                                <input type="text" class="form-control col-md-12" id="periodo"
+                                                    name="periodo" th:field="*{periodo}"
+                                                    placeholder="Ingrese el periodo" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                <label class="col">Asignatura</label>
+                                                <input type="text" class="form-control col-md-12" id="asignatura"
+                                                    name="asignatura" th:field="*{asignatura}"
+                                                    placeholder="Ingrese la asignatura" required>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                     <div class="form-row">
+                                        <div class="form-group col-md-6 px-4">
+                                            <div class="row px-2">
+                                                <label class="col-md-12" for="inputPassword4">Paralelos</label>
+                                                <input type="text" class="form-control col-md-8" id="par"
+                                                    placeholder="Ingrese los paralelos" >
+		                                     			
+                                   				 <div class="col-md-4 text-center">
+		                                     		 <a class="btn btn-success" style="color: white" onclick="agregarparalelo()">Agregar</a>
+		                                     	 </div>
+				                                     	 <ul class="list-group  mt-2" id="listaparalelos">
+		                                     				
+		                                   				</ul>
+                                            </div>
+                                            <input type="hidden" class="form-control col-md-8" id="paralelos"
+                                                    name="paralelos" th:field="*{paralelos}"
+                                                    placeholder="Ingrese los paralelos">
+                                                  
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-success" onclick="generarcampos()">Crear Banco de Preguntas</button>
+                                    </div>
+                                </form>
+                            </div> 
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <footer th:replace="fragments/footer :: footer"> </footer>
+        </main>
+
+    </div>
+    <script th:inline="javascript">
+    var actual_palabras=0;
+    function agregarparalelo(){
+    	if(document.getElementById("par").value!=""){
+    		var cont = $("#listaparalelos").children().length;
+            var nuevapalabra = "<li class='list-group-item text-center' id='paralelo" + actual_palabras + "'>" + document.getElementById("par").value + "<a class='btn btn-danger ml-2 mr-2' style='color: white' onclick='quitarparalelo(" + "\"paralelo" + actual_palabras + "\"" + ")'><i class='fas fa-times-circle'></i></a></li>";
+            actual_palabras = actual_palabras + 1;
+            var listapalabras = document.getElementById("listaparalelos");
+            listapalabras.innerHTML += nuevapalabra;
+            document.getElementById("par").value = "";
+    	}else{
+    		alert("Ingresa alguna huebada");
+    	}
+    	 
+    }
+    function quitarparalelo(codigo) {
+        var listapalabras = document.getElementById("listaparalelos");
+        document.getElementById(codigo).remove();
+    }
+    
+    function generarcampos() {
+    	var paralelos = "";
+    	var inputparalelos = document.getElementById("paralelos");
+	   	 for (let i = 0; i < actual_palabras; i++) {
+	            if (document.getElementById("paralelo" + i) != null) {
+	                if (paralelos == "") {
+	                	paralelos = paralelos + document.getElementById("paralelo" + i).innerText;
+	                } else {
+	                	paralelos = paralelos + ";" + document.getElementById("paralelo" + i).innerText;
+	                }
+	            }
+	        }
+	   	inputparalelos.value = paralelos;
+    }
+    </script>
+</body>
+
+</html>
