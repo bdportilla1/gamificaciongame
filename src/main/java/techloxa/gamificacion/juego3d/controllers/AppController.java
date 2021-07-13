@@ -14,7 +14,7 @@ public class AppController {
 	public String inicioSistema(Model model) {
 		//model.addAttribute("titulo", "Gamificación juego 3D");
 		
-		return "principal/principal";
+		return "usuario/login";
 	}
 	@RequestMapping("/principal")
 	public String principal(Model model) {
