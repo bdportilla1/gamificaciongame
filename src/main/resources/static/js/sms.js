@@ -11,13 +11,3 @@ function inputValue() {
 		$("#pass").val('123');
 	}
 }
-
-//Modificar usuario modal
-function inputValueModal() {
-		valor = document.getElementById("contrasenia").value
-		if(valor==""){
-			$('#contrasenia').val("123")
-		}
-			  
-	
-}

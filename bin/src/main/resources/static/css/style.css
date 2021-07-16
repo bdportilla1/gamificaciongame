@@ -18,3 +18,31 @@ html, body {
   justify-content:center;
   align-content:center;
 }
+
+.nav_log{
+  padding: 0.2% 0.2%;
+  background-color: #003F72;
+  width: 100%;
+}
+#logo{
+	float:left;
+	width: 35%;
+}
+#imgEscudo{
+	width: auto;
+	margin-left: 5%;
+}
+#titulo{
+  float:right;
+  width: 50%;
+  font-size: 40vm;
+  text-align:right;
+  padding: 10px 10px;
+  color: white; 
+}
+
+
+footer{
+	color:white;
+	background-color: #003F72;
+}

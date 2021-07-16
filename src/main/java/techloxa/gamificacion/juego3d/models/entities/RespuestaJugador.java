@@ -21,29 +21,28 @@ import techloxa.gamificacion.juego3d.models.entities.BancoPreguntas;
 public class RespuestaJugador implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Generar ID's de objetos automaticamente para objetos
 	@Column(name = "idrespuestajugador", unique = true, nullable = false)
 	private Integer idrespuestajugador;
-	
+
 	@Column(name = "respuestas", nullable = false, length = 50)
 	private String respuestas;
-	
+
 	@Column(name = "puntaje", nullable = false)
 	private double puntaje;
-	
+
 	@Column(name = "nombrejugador", nullable = false, length = 100)
 	private String nombrejugador;
-	
-	@Column(name = "paralelo", nullable = false, length = 3 )
+
+	@Column(name = "paralelo", nullable = false, length = 3)
 	private String paralelo;
-	
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idbancopreguntas")
 	private BancoPreguntas bancopreguntas;
-	
+
 	public RespuestaJugador() {
 	}
 
@@ -52,7 +51,7 @@ public class RespuestaJugador implements java.io.Serializable {
 		this.puntaje = puntaje;
 		this.paralelo = paralelo;
 	}
-	
+
 	public RespuestaJugador(Integer idrespuestajugador, String respuestas, double puntaje, String nombrejugador,
 			String paralelo, BancoPreguntas bancopreguntas) {
 		super();
@@ -64,7 +63,6 @@ public class RespuestaJugador implements java.io.Serializable {
 		this.bancopreguntas = bancopreguntas;
 	}
 
-	
 	public Integer getIdrespuestajugador() {
 		return idrespuestajugador;
 	}
@@ -73,7 +71,6 @@ public class RespuestaJugador implements java.io.Serializable {
 		this.idrespuestajugador = idrespuestajugador;
 	}
 
-	
 	public String getRespuestas() {
 		return respuestas;
 	}
@@ -82,7 +79,6 @@ public class RespuestaJugador implements java.io.Serializable {
 		this.respuestas = respuestas;
 	}
 
-	
 	public double getPuntaje() {
 		return puntaje;
 	}
@@ -91,7 +87,6 @@ public class RespuestaJugador implements java.io.Serializable {
 		this.puntaje = puntaje;
 	}
 
-	
 	public String getNombrejugador() {
 		return nombrejugador;
 	}
@@ -100,7 +95,6 @@ public class RespuestaJugador implements java.io.Serializable {
 		this.nombrejugador = nombrejugador;
 	}
 
-	
 	public String getParalelo() {
 		return paralelo;
 	}
@@ -109,7 +103,6 @@ public class RespuestaJugador implements java.io.Serializable {
 		this.paralelo = paralelo;
 	}
 
-	
 	public BancoPreguntas getBancopreguntas() {
 		return bancopreguntas;
 	}
@@ -117,5 +110,13 @@ public class RespuestaJugador implements java.io.Serializable {
 	public void setBancopreguntas(BancoPreguntas bancopreguntas) {
 		this.bancopreguntas = bancopreguntas;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "hi ".concat(getIdrespuestajugador().toString()).concat(" ").concat(getNombrejugador()).concat(" ")
+				.concat(getParalelo()).concat(" ").concat(getRespuestas()).concat(" ").concat(" ")
+				.concat(String.valueOf(getPuntaje())).concat(" ")
+				.concat(String.valueOf(getBancopreguntas().getCodigo()));
+	}
+
 }

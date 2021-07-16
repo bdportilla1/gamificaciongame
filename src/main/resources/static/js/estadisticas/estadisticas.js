@@ -4,35 +4,35 @@ var promedioEstudiantes = document.getElementById("promedioEstudiantes");
 
 Chart.defaults.global.defaultFontFamily = "Lato";
 Chart.defaults.global.defaultFontSize = 18;
-//var puntajess = [[${puntaje}]];
+// var puntajess = [[${puntaje}]];
 
-//----------------------
-//Promedio por paralelos
+// ----------------------
+// Promedio por paralelos
 var puntaje = document.getElementById("puntaje").value;
 var paralelo = document.getElementById("paralelo").value;
-//arreglos de data
+// arreglos de data
 let arrayPuntaje = puntaje.split(";").map(Number);
 let arrayParalelo = paralelo.split(";");
-//-------------------
+// -------------------
 
-//------------------------
-//Promedio por estudiantes
+// ------------------------
+// Promedio por estudiantes
 var numEstudiantes = document.getElementById("numEstudiantes").value;
 var promedio = document.getElementById("promedio").value;
-//arreglos de data
+// arreglos de data
 let arrayNumEstudiantes = numEstudiantes.split(";");
 let arrayPromedio = promedio.split(";");
-//-------------------
+// -------------------
 
 var chartOptions = {
 	scales : {
 		xAxes : [ {
-			barPercentage : 0.3
+			arrayPuntaje : 0.3
 		} ],
 
 		yAxes : [ {
 			ticks : {
-				//iniciar en 0 el eje y
+				// iniciar en 0 el eje y
 				beginAtZero : true
 			}
 		} ],
@@ -44,8 +44,8 @@ var chartOptions = {
 	}
 };
 
-//----------------------
-//Promedio por paralelos
+// ----------------------
+// Promedio por paralelos
 var promedioData = {
 	label : 'Promedio por paralelo',
 
@@ -72,10 +72,10 @@ var barChart = new Chart(promedioParalelos, {
 	},
 	options : chartOptions
 });
-//------------------------
+// ------------------------
 
-//------------------------
-//Promedio por estudiantes
+// ------------------------
+// Promedio por estudiantes
 var promedioEst = {
 	label : 'Estudiantes por promedio',
 
@@ -95,11 +95,11 @@ var lineChart = new Chart(promedioEstudiantes, {
 		labels : arrayNumEstudiantes,
 		datasets : [ promedioEst ],
 	},
-	options: {
-        scales: {
-            yAxes: [{
-                stacked: true
-            }]
-        }
-    }
+	options : {
+		scales : {
+			yAxes : [ {
+				stacked : true
+			} ]
+		}
+	}
 });

@@ -97,7 +97,7 @@
 																		<div class="form-group">
 																			<label>Contraseña <small
 																				class="text-secondary">(requerido)</small></label> <input
-																				name="contrasenia" id="contrasenia" type="text"
+																				name="contrasenia" id="pass" type="password"
 																				style="text-transform: lowercase;"
 																				class="form-control" placeholder="********">
 																		</div>
@@ -143,28 +143,18 @@
 																		style="margin: auto">
 																		<!-- REVISAR ONCLICK, NO SE PASA CORRECTAMENTE LA CONTRASEÑA INICIAL -->
 																		<button class="btn btn-info col-sm-12" type="submit"
-																			th:onclick="'PasarValor()'">
+																			th:onclick="'inputChange()'">
 																			<i class="fa fa-check"></i> Guardar
 																		</button>
 																	</div>
 																</div>
 																<script type="text/javascript">
-																	function PasarValor() {
-																		var valor = document
-																				.getElementById("contrasenia").value;
-																		if (valor === "") {
-																			var clave = "123";
-																			alert("dentro de if");
-																			//clave = document.getElementById("contrasenia").value;
-																			setTimeout(
-																					alert(clave),
-																					5000);
-																			document
-																					.getElementById("contrasenia").innerHTML = '123';
-
-																			//valor.val(clave);
-																		}
+																function inputChange() {
+																	valor = document.getElementById("pass").value;
+																	if (valor == "") {
+																		$("#pass").val('123');
 																	}
+																}
 																</script>
 															</form>
 														</div>
